@@ -13,7 +13,7 @@ func main() {
   //create and seed a psuedo-random number stream
   shuffler := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-  permutation := shuffler.Perm(NUM_CARDS-1)
+  permutation := shuffler.Perm(NUM_CARDS)
 
   stdDeck := newStdDeck()
   shuffledDeck := shuffle(stdDeck, permutation)
@@ -77,7 +77,9 @@ func newStdDeck() [NUM_CARDS]string {
 //TODO:implement shuffle function
 func shuffle(cards [NUM_CARDS]string, permutation []int) [NUM_CARDS]string {
   var shuffledDeck [NUM_CARDS]string
+
   for i := 0; i < NUM_CARDS; i++ {
+    shuffledDeck[i] = cards[permutation[i]]
   }
 
   return shuffledDeck
