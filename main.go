@@ -2,10 +2,14 @@ package main
 
 import (
   "fmt"
+  "math/rand"
+  "time"
 )
 
+const numCards = 52
+
 func main() {
-  stdDeck := [52]string{
+  stdDeck := [numCards]string{
     "As",
     "2s",
     "3s",
@@ -59,6 +63,18 @@ func main() {
     "Qh",
     "Kh",
   }
-  
+
+  //create and seed a psuedo-random number stream
+  shuffler := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+  permutation := shuffler.Perm(numCards-1)
+
+  fmt.Println(permutation)
+  fmt.Println("\n")
   fmt.Println(stdDeck)
+}
+
+//TODO:implement shuffle function
+func shuffle(cards [numCards]string, permutation []int) int {
+
 }
