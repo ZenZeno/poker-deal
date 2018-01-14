@@ -21,6 +21,8 @@ func main() {
   fmt.Println(stdDeck, "\n")
   fmt.Println(permutation, "\n")
   fmt.Println(shuffledDeck, "\n")
+
+  fmt.Println(dealNHands(2, 7, shuffledDeck))
 }
 
 func newStdDeck() [NUM_CARDS]string {
@@ -37,8 +39,8 @@ func newStdDeck() [NUM_CARDS]string {
 
       //construct a slice to reference the current suit in deck array:
       suit = deck[a:b]
-      fmt.Printf("Slice %v: [%v, %v)\n", j, a, b)
 
+      //construct appropriate string for each card in suit j:
       for i := 1; i <= NUM_CARDS / 4; i++ { //i cards in each suit
         //give face cards proper names:
         switch i {
@@ -74,7 +76,10 @@ func newStdDeck() [NUM_CARDS]string {
     return deck
 }
 
-//TODO:implement shuffle function
+//shuffle([]string, []int []string)
+// cards []string:    list of cards in an arbitrary order
+// permutation []int: precalculated permutation of {0, ... NUM_CARDS}
+// returns list of cards in the permuted order
 func shuffle(cards [NUM_CARDS]string, permutation []int) [NUM_CARDS]string {
   var shuffledDeck [NUM_CARDS]string
 
@@ -83,4 +88,27 @@ func shuffle(cards [NUM_CARDS]string, permutation []int) [NUM_CARDS]string {
   }
 
   return shuffledDeck
+}
+
+//TODO: Finish dealNHands()
+// n int: number of hands to deal
+func dealNHands(n int, numCards int, cards [NUM_CARDS]string) [][]string {
+  hands := make([][]string, n)
+
+  //sanity check that there are enough cards to be dealt
+  if (n * numCards) > NUM_CARDS {
+    fmt.Println("Error: requesed more cards to be dealt then exist")
+    return hands
+  }
+
+  //Use increment slice to push numCards cards into n different hands
+  var inc []string
+  inc = cards[0:]
+
+  for i := range hands {
+    hands[i] = inc[0:numCards]
+    inc = inc[numCards:]
+  }
+
+  return hands
 }
